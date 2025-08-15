@@ -2,20 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+  border-radius: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b577df;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aa64da;
+}
+::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0.37);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-gradient-shift {
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+/* Text Gradient Animation */
+@keyframes textShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-text-shift {
+  background-size: 200% 100%;
+  animation: textShift 5s ease-in-out infinite;
+}
+
+/* Background Gradient Animation */
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-background-shift {
+  background-size: 200% 100%;
+  animation: backgroundShift 10s ease-in-out infinite;
+}
+/* Text Gradient Animation */
+@keyframes textShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-text-shift {
+  background-size: 200% 100%;
+  animation: textShift 5s ease-in-out infinite;
+}
+
+/* Background Gradient Animation */
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-background-shift {
+  background-size: 200% 100%;
+  animation: backgroundShift 10s ease-in-out infinite;
 }
