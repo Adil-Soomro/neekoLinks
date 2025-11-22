@@ -6,6 +6,17 @@ import { useInView } from "react-intersection-observer";
 import { Josefin_Sans } from "next/font/google";
 
 const josefin = Josefin_Sans({
+<<<<<<< HEAD
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const Faq = () => {
+  const [refFeature, inViewFeature] = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+=======
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700']
 })
@@ -14,14 +25,19 @@ const Faq = () => {
 
   
   const [refFeature, inViewFeature] = useInView({ triggerOnce: true, threshold: 0.3 });
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
 
+<<<<<<< HEAD
+  const [openStates, setOpenStates] = useState(Array(8).fill());
+=======
   const [openStates, setOpenStates] = useState(
     Array(8).fill()
   );
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
   const faqItems = [
     {
@@ -81,7 +97,12 @@ const Faq = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={inViewFeature ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
+<<<<<<< HEAD
+      className="px-8 bg-gradient-to-r container mx-auto max-w-screen-2xl from-purple-100 to-pink-100"
+    >
+=======
       className="px-8 bg-gradient-to-r container mx-auto max-w-screen-2xl from-purple-100 to-pink-100">
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
       <div className="py-8 sm:px-12 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
         <motion.h2
           initial={{ opacity: 0, y: -30 }}
@@ -101,10 +122,19 @@ const Faq = () => {
                 initial="hidden"
                 animate="visible"
                 transition={{ delay: index * 0.3 }}
+<<<<<<< HEAD
+                className="mb-10 border-b pb-4 bg-purple-100 rounded-lg"
+              >
+                <div
+                  onClick={() => toggleOpenState(index)}
+                  className="flex items-center justify-between cursor-pointer text-gray-900 hover:text-pink-700 "
+                >
+=======
                 className="mb-10 border-b pb-4 bg-purple-100 rounded-lg">
                 <div
                   onClick={() => toggleOpenState(index)}
                   className="flex items-center justify-between cursor-pointer text-gray-900 hover:text-pink-700 ">
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   <h3 className="text-lg font-bold font-opensans">
                     {item.question}
                   </h3>
@@ -145,8 +175,12 @@ const Faq = () => {
                   onClick={() => toggleOpenState(index + 4)}
                   className="flex items-center justify-between cursor-pointer text-gray-900 hover:text-pink-700"
                 >
+<<<<<<< HEAD
+                  <h3 className="text-lg font-bold font-opensans">
+=======
                   <h3
                     className="text-lg font-bold font-opensans">
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                     {item.question}
                   </h3>
                   {openStates[index + 4] ? (
