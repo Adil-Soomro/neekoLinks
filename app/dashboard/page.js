@@ -185,11 +185,7 @@ const Dashboard = () => {
           <div className="p-4 flex items-center justify-between">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-<<<<<<< HEAD
               className="p-2 hover:bg-gray-600 rounded-lg"
-=======
-              className="p-2 hover:bg-gray-100 rounded-lg"
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
               aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
             >
               <Menu className="relative" />
