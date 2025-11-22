@@ -86,7 +86,11 @@ const Page = () => {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Don’t have an account?{" "}
+<<<<<<< HEAD
           <a href="#" className="text-blue-600 hover:underline">
+=======
+          <a href="/register" className="text-blue-600 hover:underline">
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
             Sign up
           </a>
         </p>

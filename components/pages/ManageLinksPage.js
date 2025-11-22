@@ -6,9 +6,15 @@ import Link from "next/link";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
+<<<<<<< HEAD
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700"],
 });
+=======
+  subsets: ['latin'],
+  weight: ["200", "300", "400", "500", "600", "700"]
+})
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
 const ManageLinksPage = () => {
   const [urls, setUrls] = useState([]);
@@ -17,6 +23,7 @@ const ManageLinksPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [search, setSearch] = useState("");
   const [openEditFile, setOpenEditFile] = useState(null);
+<<<<<<< HEAD
   const [docItem, setDocItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dataloading, setDataLoading] = useState(false);
@@ -27,6 +34,18 @@ const ManageLinksPage = () => {
     shortUrl: "",
     status: "active",
     created: "",
+=======
+  const [docItem, setDocItem] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [dataloading, setDataLoading] = useState(false)
+  const [message, setMessage] = useState('')
+
+  const [formData, setFormData] = useState({
+    URL: '',
+    shortUrl: '',
+    status: 'active',
+    created: ''
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
   });
 
   useEffect(() => {
@@ -34,6 +53,7 @@ const ManageLinksPage = () => {
       setFormData({
         URL: docItem.url,
         shortUrl: docItem.shortUrl,
+<<<<<<< HEAD
         status: docItem.isActive ? "active" : "inactive",
       });
     }
@@ -41,6 +61,17 @@ const ManageLinksPage = () => {
 
   const fetchUrls = async () => {
     setDataLoading(true);
+=======
+        status: docItem.isActive ? 'active' : 'inactive'
+      })
+    }
+
+  }, [docItem])
+
+
+  const fetchUrls = async () => {
+    setDataLoading(true)
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     try {
       const res = await fetch(
         `/api/urls?sortBy=${sortBy}&order=${order}&filterStatus=${filterStatus}&search=${search}`
@@ -48,10 +79,17 @@ const ManageLinksPage = () => {
       const data = await res.json();
       setUrls(data);
       setTimeout(() => {
+<<<<<<< HEAD
         setDataLoading(false);
       }, 500);
     } catch (error) {
       setDataLoading(false);
+=======
+        setDataLoading(false)
+      }, 1000);
+    } catch (error) {
+      setDataLoading(false)
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     }
   };
 
@@ -65,15 +103,24 @@ const ManageLinksPage = () => {
   };
 
   const handlePopupFunc = (doc) => {
+<<<<<<< HEAD
     setOpenEditFile(true);
     setDocItem(doc);
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+=======
+    setOpenEditFile(true)
+    setDocItem(doc)
+  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+<<<<<<< HEAD
   };
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -100,6 +147,37 @@ const ManageLinksPage = () => {
     }
     setLoading(false);
   };
+=======
+  }
+  const handleUpdate = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/updatedocument/${docItem._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const data = await response.json()
+      setMessage(data.message)
+      setTimeout(() => {
+        setMessage('')
+
+      }, 3000);
+      if (!data.success) {
+        setMessage(data.message)
+        setLoading(false)
+      }
+    } catch (error) {
+      setMessage("Something Went Wrong Please Try Again Later!");
+      setsetStatusMessage("error")
+      setLoading(false)
+    }
+    setLoading(false)
+
+
+  }
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
   return (
     <motion.div
@@ -107,12 +185,18 @@ const ManageLinksPage = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
+<<<<<<< HEAD
       className="container flex flex-col justify-center p-4"
     >
       <h1 className="text-3xl font-poppins font-semibold mb-4">
         Manage Your Links
       </h1>
 
+=======
+      className="container flex flex-col justify-center p-4">
+      <h1 className="text-3xl font-poppins font-semibold mb-4">Manage Your Links</h1>
+      
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
       <div className="flex flex-wrap gap-2 mb-4">
         <input
           type="text"
@@ -137,10 +221,14 @@ const ManageLinksPage = () => {
           {dataloading ? (
             <tbody>
               <tr>
+<<<<<<< HEAD
                 <td
                   colSpan="6"
                   className="flex flex-col items-center justify-center min-h-[400px] text-center py-4"
                 >
+=======
+                <td colSpan="6" className="flex flex-col items-center justify-center min-h-[400px] text-center py-4">
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4" />
                   <p className="text-gray-600">Loading...</p>
                 </td>
@@ -149,10 +237,14 @@ const ManageLinksPage = () => {
           ) : urls.length === 0 ? (
             <tbody>
               <tr>
+<<<<<<< HEAD
                 <td
                   colSpan="6"
                   className={`${poppins.className} text-center py-4 text-gray-500 font-medium`}
                 >
+=======
+                <td colSpan="6" className={`${poppins.className} text-center py-4 text-gray-500 font-medium`}>
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   No results found
                 </td>
               </tr>
@@ -161,6 +253,7 @@ const ManageLinksPage = () => {
             <>
               <thead>
                 <tr className="bg-gray-100">
+<<<<<<< HEAD
                   {[
                     "Short URL",
                     "Full URL",
@@ -174,6 +267,13 @@ const ManageLinksPage = () => {
                       onClick={() =>
                         handleSort(title.toLowerCase().replace(" ", ""))
                       }
+=======
+                  {["Short URL", "Full URL", "Clicks", "Last Access", "Status"].map((title, index) => (
+                    <th
+                      key={index}
+                      className="border px-4 py-2 text-left cursor-pointer text-gray-700 font-medium text-[12px]"
+                      onClick={() => handleSort(title.toLowerCase().replace(" ", ""))}
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                     >
                       {title.toUpperCase()}
                     </th>
@@ -185,6 +285,7 @@ const ManageLinksPage = () => {
                 {urls.map((doc) => (
                   <tr key={doc._id} className="hover:bg-gray-50 transition">
                     <td className="border px-4 py-2">
+<<<<<<< HEAD
                       <Link
                         className="text-blue-500 cursor-pointer hover:text-blue-700"
                         target="_blank"
@@ -204,6 +305,17 @@ const ManageLinksPage = () => {
                       className={`border px-4 py-2 text-sm font-medium ${
                         doc.isActive ? "text-green-600" : "text-red-600"
                       }`}
+=======
+                      <Link className="text-blue-500 cursor-pointer hover:text-blue-700" target="_blank" href={doc.shortUrl}>
+                        {process.env.NEXT_PUBLIC_HOST}/{doc.shortUrl}
+                      </Link>
+                    </td>
+                    <td className="border px-4 py-2 truncate max-w-[250px]">{doc.url}</td>
+                    <td className="border px-4 py-2 text-sm">{doc.clicks}</td>
+                    <td className="border px-4 py-2 text-sm">{new Date(doc.lastAccess).toLocaleString()}</td>
+                    <td
+                      className={`border px-4 py-2 text-sm font-medium ${doc.isActive ? "text-green-600" : "text-red-600"}`}
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                     >
                       {doc.isActive ? "Active" : "Inactive"}
                     </td>
@@ -212,12 +324,16 @@ const ManageLinksPage = () => {
                         onClick={() => handlePopupFunc(doc)}
                         className="hover:text-black text-gray-800 cursor-pointer"
                       >
+<<<<<<< HEAD
                         <Player
                           hover
                           autoplay
                           src={"/lotties/edit.json"}
                           className="size-12"
                         />
+=======
+                        <Player hover autoplay src={'/lotties/edit.json'} className="size-12" />
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                       </button>
                     </td>
                   </tr>
@@ -242,6 +358,7 @@ const ManageLinksPage = () => {
                   onClick={() => setOpenEditFile(null)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
+<<<<<<< HEAD
                   <svg
                     className="w-6 h-6"
                     fill="none"
@@ -254,15 +371,23 @@ const ManageLinksPage = () => {
                       strokeWidth={2}
                       d="M6 18L18 6M6 6l12 12"
                     />
+=======
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   </svg>
                 </button>
               </div>
 
               <form onSubmit={(e) => handleUpdate(e)} className="space-y-4">
                 <div>
+<<<<<<< HEAD
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Short URL
                   </label>
+=======
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Short URL</label>
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   <input
                     type="text"
                     name="shortUrl"
@@ -274,9 +399,13 @@ const ManageLinksPage = () => {
                 </div>
 
                 <div>
+<<<<<<< HEAD
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Full URL
                   </label>
+=======
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full URL</label>
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   <input
                     type="text"
                     name="URL"
@@ -288,9 +417,13 @@ const ManageLinksPage = () => {
                 </div>
 
                 <div>
+<<<<<<< HEAD
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Status
                   </label>
+=======
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   <select
                     value={formData.status}
                     name="status"
@@ -315,25 +448,37 @@ const ManageLinksPage = () => {
                   </button>
                   <button
                     type="submit"
+<<<<<<< HEAD
                     className={`px-4 py-2 text-white rounded-xl transition-colors w-full sm:w-auto ${
                       loading
                         ? "bg-blue-400 cursor-not-allowed"
                         : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-400 shadow-md"
                     }`}
+=======
+                    className={`px-4 py-2 text-white rounded-xl transition-colors w-full sm:w-auto ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-400 shadow-md"}`}
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                     disabled={loading}
                   >
                     {loading ? "Saving..." : "Save Changes"}
                   </button>
                 </div>
                 {message && (
+<<<<<<< HEAD
                   <div className="mb-4 p-3 text-sm text-green-700 bg-green-100 rounded-lg">
                     {message}
                   </div>
+=======
+                  <div className="mb-4 p-3 text-sm text-green-700 bg-green-100 rounded-lg">{message}</div>
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                 )}
               </form>
             </div>
           </div>
         )}
+<<<<<<< HEAD
+=======
+
+>>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
       </div>
     </motion.div>
   );
