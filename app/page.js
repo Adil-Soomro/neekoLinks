@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 import Image from "next/image";
@@ -19,36 +18,15 @@ import Testimonials from "@/components/UI Elements/Testimonials";
 import Achievements from "@/components/UI Elements/Achievements";
 import CTAbutton from "@/components/UI Elements/CTAbutton";
 import { useRef } from "react";
-=======
-"use client"
-
-import Image from "next/image"
-import localFont from "next/font/local"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import { ArrowRight, CheckCircle, Link2, BarChart3, Share2 } from 'lucide-react'
-import Newsletter from "@/components/UI Elements/Newsletter"
-import Faq from "@/components/UI Elements/Faq"
-import Testimonials from "@/components/UI Elements/Testimonials"
-import Achievements from "@/components/UI Elements/Achievements"
-import CTAbutton from "@/components/UI Elements/CTAbutton"
-import { useRef } from "react"
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
 const poppins = localFont({
   src: "./fonts/Poppins-SemiBold.ttf",
   variable: "--font-poppins",
-<<<<<<< HEAD
 });
-=======
-})
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
 const worksans = localFont({
   src: "./fonts/WorkSans-SemiBold.ttf",
   variable: "--font-worksans",
-<<<<<<< HEAD
 });
 
 export default function Page() {
@@ -64,70 +42,41 @@ export default function Page() {
     triggerOnce: true,
     threshold: 0.1,
   });
-=======
-})
-
-export default function Page() {
-  const [refHero, inViewHero] = useInView({ triggerOnce: true, threshold: 0.1 })
-  const [refFeatures, inViewFeatures] = useInView({ triggerOnce: true, threshold: 0.1 })
-  const [refStats, inViewStats] = useInView({ triggerOnce: true, threshold: 0.1 })
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
   const features = [
     {
       icon: <Link2 className="w-6 h-6" />,
       title: "Custom Branded Links",
-<<<<<<< HEAD
       description:
         "Create memorable, branded links that reflect your identity and boost recognition.",
-=======
-      description: "Create memorable, branded links that reflect your identity and boost recognition."
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     },
     {
       icon: <BarChart3 className="w-6 h-6" />,
       title: "Detailed Analytics",
-<<<<<<< HEAD
       description:
         "Track clicks, geographic data, devices, and more with our comprehensive analytics.",
-=======
-      description: "Track clicks, geographic data, devices, and more with our comprehensive analytics."
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     },
     {
       icon: <Share2 className="w-6 h-6" />,
       title: "Easy Sharing",
-<<<<<<< HEAD
       description:
         "Share your shortened links across all platforms with just one click.",
-=======
-      description: "Share your shortened links across all platforms with just one click."
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
       title: "Link Management",
-<<<<<<< HEAD
       description:
         "Organize, edit, and manage all your links from one central dashboard.",
-=======
-      description: "Organize, edit, and manage all your links from one central dashboard."
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
       title: "API Access",
-<<<<<<< HEAD
       description:
         "Integrate our powerful URL shortening capabilities into your applications.",
-=======
-      description: "Integrate our powerful URL shortening capabilities into your applications."
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
     },
     {
       icon: <CheckCircle className="w-6 h-6" />,
       title: "QR Code Generation",
-<<<<<<< HEAD
       description: "Generate QR codes for your shortened links instantly.",
     },
   ];
@@ -139,13 +88,6 @@ export default function Page() {
     triggerOnce: true,
     threshold: 0.4,
   });
-=======
-      description: "Generate QR codes for your shortened links instantly."
-    }
-  ]
-  const [refFeature, inViewFeature] = useInView({ triggerOnce: true, threshold: 0.4 });
-  const [refFeature2, inViewFeature2] = useInView({ triggerOnce: true, threshold: 0.4 });
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
 
   return (
     <main className="min-h-screen bg-white">
@@ -189,14 +131,10 @@ export default function Page() {
                 transition={{ delay: 0.3 }}
               >
                 Transform Long Links into
-<<<<<<< HEAD
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
                   {" "}
                   Powerful Connections
                 </span>
-=======
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600"> Powerful Connections</span>
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
               </motion.h1>
 
               <motion.p
@@ -205,12 +143,8 @@ export default function Page() {
                 animate={inViewHero ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.4 }}
               >
-<<<<<<< HEAD
                 More than just a link shortener. Get detailed analytics, custom
                 branded links, and powerful tools to grow your brand.
-=======
-                More than just a link shortener. Get detailed analytics, custom branded links, and powerful tools to grow your brand.
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
               </motion.p>
 
               <motion.div
@@ -245,11 +179,7 @@ export default function Page() {
             >
               <div className="relative z-10">
                 <Image
-<<<<<<< HEAD
                   src="/illustrations/4673521.png"
-=======
-                  src="/4673521.png"
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
                   alt="URL Shortener Illustration"
                   width={600}
                   height={600}
@@ -264,12 +194,8 @@ export default function Page() {
       </section>
 
       {/* Features Section */}
-<<<<<<< HEAD
       <motion.section
         id="features"
-=======
-      <motion.section id="features"
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
         className={`py-20 px-4 sm:px-6 lg:px-8 transition-opacity duration-1000 opacity-100 translate-y-0 `}
       >
         <div className="container mx-auto">
@@ -278,12 +204,8 @@ export default function Page() {
             initial={{ opacity: 0, y: 30 }}
             animate={inViewFeature ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-<<<<<<< HEAD
             className="text-center max-w-3xl mx-auto mb-16"
           >
-=======
-            className="text-center max-w-3xl mx-auto mb-16">
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
             <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900">
               Everything you need in a{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
@@ -291,12 +213,8 @@ export default function Page() {
               </span>
             </h2>
             <p className="text-lg text-gray-600">
-<<<<<<< HEAD
               Powerful features to help you manage, track, and optimize your
               links
-=======
-              Powerful features to help you manage, track, and optimize your links
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
             </p>
           </motion.div>
 
@@ -328,10 +246,5 @@ export default function Page() {
       <Faq />
       <CTAbutton />
     </main>
-<<<<<<< HEAD
   );
 }
-=======
-  )
-}
->>>>>>> ca5f7f89e253e081250a5245dc9c417faed86d4c
