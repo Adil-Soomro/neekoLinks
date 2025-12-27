@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [LoggedIn, setLoggedIn] = useState(false);
 
@@ -18,7 +19,7 @@ const Navbar = () => {
         setLoggedIn(false);
       }
     } catch (error) {
-      redirect("/login");
+      router.push("/login");
     }
   }, []);
 
@@ -60,18 +61,6 @@ const Navbar = () => {
               </span>
             </Link>
           ))}
-          {/* <Link
-            href="/dashboard"
-            className={`py-2 px-3 rounded-xl ${
-              pathname === "/dashboard"
-                ? "text-blue-800"
-                : "text-gray-800 hover:text-black"
-            }`}
-          >
-            <span className="text-lg transition-all duration-300">
-              Dashboard
-            </span>
-          </Link> */}
           {LoggedIn ? (
             <Link
               href={"/dashboard"}
@@ -87,7 +76,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => {
-                redirect("/login");
+                router.push("/login");
               }}
               className={`block py-2 px-4 bg-gray-800 text-white hover:bg-gray-950 rounded-lg text-start font-medium`}
             >
@@ -181,7 +170,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               setIsMenuOpen(false);
-              redirect("/login");
+              router.push("/login");
             }}
             className={`block py-2 px-4 w-full text-start hover:bg-gray-300 font-medium ${
               pathname === "/login"

@@ -24,8 +24,8 @@ const DashboardPage = () => {
   const [activeSection, setActiveSection] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = (useState < string) | (null > null);
-  const [data, setData] = useState < any > null;
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const [handleLogout, setHandleLogout] = useState(false);
 
   // CLIENT-SAFE token check

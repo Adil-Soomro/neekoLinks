@@ -56,19 +56,18 @@ const Shorten = () => {
   }, [generated]);
 
   const handleGenerate = () => {
-    setGenLoading(true);
-    if (url === "") {
+    if (!url) {
       setUrlError("URL is required.");
       return;
     } else {
-      setUrlError(""); // Clear the error message when URL is valid
+      setUrlError("");
     }
 
-    if (shortUrl === "") {
+    if (!shortUrl) {
       setShortUrlError("Short URL is required.");
       return;
     } else {
-      setShortUrlError(""); // Clear the error message when Short URL is valid
+      setShortUrlError("");
     }
     if (!url.includes("https://")) {
       setErrorMessage("Invalid Link! URL must include https://");
@@ -77,49 +76,40 @@ const Shorten = () => {
       setErrorMessage("");
     }
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    setGenLoading("true");
 
-    const raw = JSON.stringify({
-      url: url,
-      shorturl: shortUrl,
+    const request = fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        url,
+        shorturl: shortUrl,
+      }),
+    }).then(async (res) => {
+      const result = await res.json();
+
+      if (!result.success) {
+        throw new Error("URL Already Exists");
+      }
+
+      return result;
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    setTimeout(() => {
-      fetch("/api/generate", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.success) {
-            if (url.includes("https://")) {
-              toast.success("Your Link Generated Successfully!");
-              setGenerated(`${process.env.NEXT_PUBLIC_HOST}/${shortUrl}`);
-              setURL("");
-              setShortURL("");
-              setGenLoading(false);
-            } else {
-              toast.error("Invalid Link! URL must include https://");
-              setGenLoading(false);
-            }
-          } else {
-            toast.error("URL Already Exists!");
-            setGenLoading(false);
-          }
-        })
-        .catch(() => reject("Something went wrong, try again later!"));
-    }, 2000);
-
-    toast.promise(promise, {
+    toast.promise(request, {
       loading: "Submitting...",
       success: <b>Your Link Generated Successfully!</b>,
       error: (error) => <b>{error}</b>,
     });
+
+    request
+      .then(() => {
+        setGenerated(`${process.env.NEXT_PUBLIC_HOST}/${shortUrl}`);
+        setURL("");
+        setShortURL("");
+      })
+      .finally(() => {
+        setGenLoading(false);
+      });
   };
   const ValidateURL = (e) => {
     const isValidLink = e.includes("https://") && e.includes(".");
