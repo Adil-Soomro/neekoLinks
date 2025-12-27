@@ -55,22 +55,6 @@ export const metadata = {
       },
     ],
   },
-
-  // Add Twitter cards too
-  twitter: {
-    card: "summary_large_image",
-    title: "NeekoLinks - Free URL Shortener",
-    description:
-      "Create short, secure, and trackable links with NeekoLinks. The best free URL shortener for marketing and social media.",
-    images: ["https://neekolinks.com/twitter-image.png"], // Add your Twitter image
-    creator: "@NeekoLinks", // Add your Twitter handle
-  },
-
-  // Optional: Add verification when you have them
-  // verification: {
-  //   google: 'your-google-verification-code',
-  //   bing: 'your-bing-verification-code',
-  // },
 };
 
 export default function RootLayout({ children }) {
