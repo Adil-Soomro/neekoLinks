@@ -16,10 +16,61 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "NeekoLinks - Free URL Shortener | Fast & Secure Link Management",
-  description: "NeekoLinks is the best free URL shortener for creating short, secure, and trackable links. Simplify, manage, and analyze your URLs with ease.",
-  keywords: "URL shortener, free link shortener, secure URL shortener, trackable links, link management, shorten URLs, custom short links, free URL shortener, short links, create short links, NeekoLinks, link management, track clicks, social media links, marketing tools",
-  author: "NeekoLinks",
-  robots: "index, follow",
+  description:
+    "NeekoLinks is the best free URL shortener for creating short, secure, and trackable links. Simplify, manage, and analyze your URLs with ease.",
+  keywords:
+    "URL shortener, free link shortener, secure URL shortener, trackable links, link management, shorten URLs, custom short links, free URL shortener, short links, create short links, NeekoLinks, link management, track clicks, social media links, marketing tools, Url shorten",
+
+  authors: [{ name: "Muhammad Mubashir" }],
+  creator: "Muhammad Mubashir",
+  publisher: "Muhammad Mubashir",
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  // OPENGRAPH SHOULD BE HERE, not inside robots
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://neekolinks.netlify.app",
+    title: "NeekoLinks - Free URL Shortener | Fast & Secure Link Management",
+    description:
+      "NeekoLinks is the best free URL shortener for creating short, secure, and trackable links. Simplify, manage, and analyze your URLs with ease.",
+    siteName: "NeekoLinks",
+    images: [
+      {
+        url: "https://neekolinks.netlify.app/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NeekoLinks - Free URL Shortener Dashboard",
+      },
+    ],
+  },
+
+  // Add Twitter cards too
+  twitter: {
+    card: "summary_large_image",
+    title: "NeekoLinks - Free URL Shortener",
+    description:
+      "Create short, secure, and trackable links with NeekoLinks. The best free URL shortener for marketing and social media.",
+    images: ["https://neekolinks.com/twitter-image.png"], // Add your Twitter image
+    creator: "@NeekoLinks", // Add your Twitter handle
+  },
+
+  // Optional: Add verification when you have them
+  // verification: {
+  //   google: 'your-google-verification-code',
+  //   bing: 'your-bing-verification-code',
+  // },
 };
 
 export default function RootLayout({ children }) {
