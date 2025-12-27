@@ -1,19 +1,28 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Poppins, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/LayoutComponents/Navbar";
 import Footer from "@/components/LayoutComponents/Footer";
 import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+});
 export const metadata = {
   title: "NeekoLinks - Free URL Shortener | Fast & Secure Link Management",
   description:
@@ -61,7 +70,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`flex flex-col min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased bg-purple-50`}
+        className={`flex flex-col min-h-screen ${inter.variable} ${poppins.variable} ${openSans.variable} antialiased bg-purple-50`}
       >
         <Navbar />
         <Toaster position="top-right" />
