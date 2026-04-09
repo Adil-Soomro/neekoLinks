@@ -1,19 +1,17 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import { BarChart2, Link2, Share2 } from 'lucide-react'
-import StatsCard from '@/components/dashboard/StatsCard'
-
-
+"use client";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { BarChart2, Link2, Share2 } from "lucide-react";
+import StatsCard from "@/components/dashboard/StatsCard";
 
 const OverviewPage = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true);
   const useCounter = (endValue, duration = 2) => {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
       let start = 0;
-      const increment = endValue / (duration * 60); // Increment per frame (assuming 60 fps)
+      const increment = endValue / (duration * 60);
 
       const counter = setInterval(() => {
         start += increment;
@@ -31,46 +29,43 @@ const OverviewPage = () => {
   };
 
   const [statsData, setStatsData] = useState({
-    totalLinks: '',
-    totalClicksAgg: '',
-    unqiueVisitors: ''
-  })
-  const [recentLinks, setRecentLinks] = useState([])
+    totalLinks: "",
+    totalClicksAgg: "",
+    unqiueVisitors: "",
+  });
+  const [recentLinks, setRecentLinks] = useState([]);
 
   useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        setLoading(true);
+        const API_URL = process.env.NEXT_PUBLIC_HOST;
+        const [data, stats] = await Promise.all([
+          fetch(`${API_URL}/api/dashboard/overview`),
+          fetch(`${API_URL}/api/dashboard/overview/stats`),
+        ]);
 
-    setLoading(true)
-    const fetchData = async () => {
-      const res = await fetch('/api/dashboard/overview')
-      const data = await res.json()
-      setRecentLinks(data)
-      setTimeout(() => {
+        const recentData = await data.json();
+        const statsData = await stats.json();
 
-        setLoading(false)
-      }, 1000);
-    }
-    fetchData()
-
-    const fetchStats = async () => {
-
-      const res = await fetch('api/dashboard/overview/stats')
-      const data = await res.json()
-
-      setStatsData({
-        totalLinks: data.totalLinks,
-        totalClicksAgg: data.totalClicksAggregation[0].totalClicks,
-        unqiueVisitors: data.uniqueVisitors
-      })
-    }
-    fetchStats()
-  }, [])
-  useEffect(() => {
-
-  }, [statsData])
+        setRecentLinks(recentData);
+        setStatsData({
+          totalLinks: statsData.totalLinks,
+          totalClicksAgg: statsData.totalClicksAggregation[0].totalClicks,
+          unqiueVisitors: statsData.uniqueVisitors,
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchdata();
+  }, []);
+  useEffect(() => {}, [statsData]);
   const totalShortLinks = useCounter(statsData.totalLinks, 2);
   const totalClicks = useCounter(statsData.totalClicksAgg, 2);
   const visitors = useCounter(statsData.unqiueVisitors, 2);
-
 
   return (
     <motion.div
@@ -80,9 +75,21 @@ const OverviewPage = () => {
       transition={{ duration: 0.2 }}
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <StatsCard title="Total Links" value={totalShortLinks.toLocaleString()} icon={Link2} />
-        <StatsCard title="Total Clicks" value={totalClicks.toLocaleString()} icon={BarChart2} />
-        <StatsCard title="Unique Visitors" value={visitors.toLocaleString()} icon={Share2} />
+        <StatsCard
+          title="Total Links"
+          value={totalShortLinks.toLocaleString()}
+          icon={Link2}
+        />
+        <StatsCard
+          title="Total Clicks"
+          value={totalClicks.toLocaleString()}
+          icon={BarChart2}
+        />
+        <StatsCard
+          title="Unique Visitors"
+          value={visitors.toLocaleString()}
+          icon={Share2}
+        />
       </div>
 
       <h2 className="text-2xl font-semibold mb-4 p-2">Recent Activity</h2>
@@ -105,11 +112,19 @@ const OverviewPage = () => {
             <tbody>
               {recentLinks.map((link, index) => (
                 <tr key={index} className="border-b hover:bg-gray-50">
-                  <td className="px-3 py-2 text-sm whitespace-nowrap">{link.shortUrl}</td>
-                  <td className="px-3 py-2 text-sm truncate max-w-[300px]">{link.url}</td>
-                  <td className="px-3 py-2 text-sm text-center">{link.clicks}</td>
+                  <td className="px-3 py-2 text-sm whitespace-nowrap">
+                    {link.shortUrl}
+                  </td>
+                  <td className="px-3 py-2 text-sm truncate max-w-[300px]">
+                    {link.url}
+                  </td>
+                  <td className="px-3 py-2 text-sm text-center">
+                    {link.clicks}
+                  </td>
                   <td className="px-3 py-2 text-xs whitespace-nowrap">
-                    {link.lastAccess ? new Date(link.lastAccess).toLocaleString() : "N/A"}
+                    {link.lastAccess
+                      ? new Date(link.lastAccess).toLocaleString()
+                      : "N/A"}
                   </td>
                 </tr>
               ))}
@@ -118,7 +133,7 @@ const OverviewPage = () => {
         </div>
       )}
     </motion.div>
-  )
-}
+  );
+};
 
-export default OverviewPage
+export default OverviewPage;

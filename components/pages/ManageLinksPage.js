@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ["200", "300", "400", "500", "600", "700"]
-})
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
+});
 
 const ManageLinksPage = () => {
   const [urls, setUrls] = useState([]);
@@ -17,16 +17,16 @@ const ManageLinksPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [search, setSearch] = useState("");
   const [openEditFile, setOpenEditFile] = useState(null);
-  const [docItem, setDocItem] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [dataloading, setDataLoading] = useState(false)
-  const [message, setMessage] = useState('')
+  const [docItem, setDocItem] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [dataloading, setDataLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
-    URL: '',
-    shortUrl: '',
-    status: 'active',
-    created: ''
+    URL: "",
+    shortUrl: "",
+    status: "active",
+    created: "",
   });
 
   useEffect(() => {
@@ -34,26 +34,24 @@ const ManageLinksPage = () => {
       setFormData({
         URL: docItem.url,
         shortUrl: docItem.shortUrl,
-        status: docItem.isActive ? 'active' : 'inactive'
-      })
+        status: docItem.isActive ? "active" : "inactive",
+      });
     }
-
-  }, [docItem])
-
+  }, [docItem]);
 
   const fetchUrls = async () => {
-    setDataLoading(true)
+    setDataLoading(true);
     try {
       const res = await fetch(
-        `/api/urls?sortBy=${sortBy}&order=${order}&filterStatus=${filterStatus}&search=${search}`
+        `${process.env.NEXT_PUBLIC_HOST}/api/urls?sortBy=${sortBy}&order=${order}&filterStatus=${filterStatus}&search=${search}`,
       );
       const data = await res.json();
       setUrls(data);
       setTimeout(() => {
-        setDataLoading(false)
+        setDataLoading(false);
       }, 1000);
     } catch (error) {
-      setDataLoading(false)
+      setDataLoading(false);
     }
   };
 
@@ -67,44 +65,41 @@ const ManageLinksPage = () => {
   };
 
   const handlePopupFunc = (doc) => {
-    setOpenEditFile(true)
-    setDocItem(doc)
-  }
+    setOpenEditFile(true);
+    setDocItem(doc);
+  };
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  }
+  };
   const handleUpdate = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(`/api/updatedocument/${docItem._id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      const data = await response.json()
-      setMessage(data.message)
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      setMessage(data.message);
       setTimeout(() => {
-        setMessage('')
-
+        setMessage("");
       }, 3000);
       if (!data.success) {
-        setMessage(data.message)
-        setLoading(false)
+        setMessage(data.message);
+        setLoading(false);
       }
     } catch (error) {
       setMessage("Something Went Wrong Please Try Again Later!");
-      setsetStatusMessage("error")
-      setLoading(false)
+      setsetStatusMessage("error");
+      setLoading(false);
     }
-    setLoading(false)
-
-
-  }
+    setLoading(false);
+  };
 
   return (
     <motion.div
@@ -112,9 +107,12 @@ const ManageLinksPage = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
-      className="container flex flex-col justify-center p-4">
-      <h1 className="text-3xl font-poppins font-semibold mb-4">Manage Your Links</h1>
-      
+      className="container flex flex-col justify-center p-4"
+    >
+      <h1 className="text-3xl font-poppins font-semibold mb-4">
+        Manage Your Links
+      </h1>
+
       <div className="flex flex-wrap gap-2 mb-4">
         <input
           type="text"
@@ -139,7 +137,10 @@ const ManageLinksPage = () => {
           {dataloading ? (
             <tbody>
               <tr>
-                <td colSpan="6" className="flex flex-col items-center justify-center min-h-[400px] text-center py-4">
+                <td
+                  colSpan="6"
+                  className="flex flex-col items-center justify-center min-h-[400px] text-center py-4"
+                >
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4" />
                   <p className="text-gray-600">Loading...</p>
                 </td>
@@ -148,7 +149,10 @@ const ManageLinksPage = () => {
           ) : urls.length === 0 ? (
             <tbody>
               <tr>
-                <td colSpan="6" className={`${poppins.className} text-center py-4 text-gray-500 font-medium`}>
+                <td
+                  colSpan="6"
+                  className={`${poppins.className} text-center py-4 text-gray-500 font-medium`}
+                >
                   No results found
                 </td>
               </tr>
@@ -157,11 +161,19 @@ const ManageLinksPage = () => {
             <>
               <thead>
                 <tr className="bg-gray-100">
-                  {["Short URL", "Full URL", "Clicks", "Last Access", "Status"].map((title, index) => (
+                  {[
+                    "Short URL",
+                    "Full URL",
+                    "Clicks",
+                    "Last Access",
+                    "Status",
+                  ].map((title, index) => (
                     <th
                       key={index}
                       className="border px-4 py-2 text-left cursor-pointer text-gray-700 font-medium text-[12px]"
-                      onClick={() => handleSort(title.toLowerCase().replace(" ", ""))}
+                      onClick={() =>
+                        handleSort(title.toLowerCase().replace(" ", ""))
+                      }
                     >
                       {title.toUpperCase()}
                     </th>
@@ -173,13 +185,21 @@ const ManageLinksPage = () => {
                 {urls.map((doc) => (
                   <tr key={doc._id} className="hover:bg-gray-50 transition">
                     <td className="border px-4 py-2">
-                      <Link className="text-blue-500 cursor-pointer hover:text-blue-700" target="_blank" href={doc.shortUrl}>
+                      <Link
+                        className="text-blue-500 cursor-pointer hover:text-blue-700"
+                        target="_blank"
+                        href={doc.shortUrl}
+                      >
                         {process.env.NEXT_PUBLIC_HOST}/{doc.shortUrl}
                       </Link>
                     </td>
-                    <td className="border px-4 py-2 truncate max-w-[250px]">{doc.url}</td>
+                    <td className="border px-4 py-2 truncate max-w-[250px]">
+                      {doc.url}
+                    </td>
                     <td className="border px-4 py-2 text-sm">{doc.clicks}</td>
-                    <td className="border px-4 py-2 text-sm">{new Date(doc.lastAccess).toLocaleString()}</td>
+                    <td className="border px-4 py-2 text-sm">
+                      {new Date(doc.lastAccess).toLocaleString()}
+                    </td>
                     <td
                       className={`border px-4 py-2 text-sm font-medium ${doc.isActive ? "text-green-600" : "text-red-600"}`}
                     >
@@ -190,7 +210,12 @@ const ManageLinksPage = () => {
                         onClick={() => handlePopupFunc(doc)}
                         className="hover:text-black text-gray-800 cursor-pointer"
                       >
-                        <Player hover autoplay src={'/lotties/edit.json'} className="size-12" />
+                        <Player
+                          hover
+                          autoplay
+                          src={"/lotties/edit.json"}
+                          className="size-12"
+                        />
                       </button>
                     </td>
                   </tr>
@@ -215,15 +240,27 @@ const ManageLinksPage = () => {
                   onClick={() => setOpenEditFile(null)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
 
               <form onSubmit={(e) => handleUpdate(e)} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Short URL</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Short URL
+                  </label>
                   <input
                     type="text"
                     name="shortUrl"
@@ -235,7 +272,9 @@ const ManageLinksPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Full URL</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full URL
+                  </label>
                   <input
                     type="text"
                     name="URL"
@@ -247,7 +286,9 @@ const ManageLinksPage = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Status
+                  </label>
                   <select
                     value={formData.status}
                     name="status"
@@ -279,13 +320,14 @@ const ManageLinksPage = () => {
                   </button>
                 </div>
                 {message && (
-                  <div className="mb-4 p-3 text-sm text-green-700 bg-green-100 rounded-lg">{message}</div>
+                  <div className="mb-4 p-3 text-sm text-green-700 bg-green-100 rounded-lg">
+                    {message}
+                  </div>
                 )}
               </form>
             </div>
           </div>
         )}
-
       </div>
     </motion.div>
   );

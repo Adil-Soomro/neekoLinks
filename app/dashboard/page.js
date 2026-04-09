@@ -19,8 +19,6 @@ import { redirect, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
-// Register ChartJS
-
 const Dashboard = () => {
   const router = useRouter();
   const token = localStorage.getItem("token");
@@ -45,7 +43,7 @@ const Dashboard = () => {
 
     useEffect(() => {
       let start = 0;
-      const increment = endValue / (duration * 60); // Increment per frame (assuming 60 fps)
+      const increment = endValue / (duration * 60);
 
       const counter = setInterval(() => {
         start += increment;
@@ -92,7 +90,6 @@ const Dashboard = () => {
         setLoading(true);
         setError(null);
 
-        // Simulated API response
         const mockData = {
           stats: {
             totalLinks: 125,
@@ -175,7 +172,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex">
-      {/* Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: isSidebarOpen ? 240 : 80 }}
@@ -245,7 +241,6 @@ const Dashboard = () => {
         </nav>
       </motion.aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-auto bg-gray-50">
         <div className="p-6">
           <AnimatePresence mode="wait">
@@ -262,7 +257,6 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Mobile Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t md:hidden z-10">
         <nav className="flex justify-around p-2">
           {MENU_ITEMS.map(({ id, icon: Icon, label }) => (

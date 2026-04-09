@@ -29,7 +29,6 @@ const Navbar = () => {
   return (
     <nav className="bg-white p-2 sticky top-0 z-20 text-black shadow-md w-full">
       <div className="max-w-screen-2xl mx-auto px-4 py-3 flex md:flex-row items-center justify-between">
-        {/* Logo */}
         <div className="font-bold text-3xl font-poppins">
           <Link href="/">
             <span className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-shift">
@@ -38,7 +37,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop NavLinks */}
         <div className="hidden md:flex space-x-6 items-center font-semibold">
           {[
             { href: "/", label: "Home" },
@@ -60,18 +58,6 @@ const Navbar = () => {
               </span>
             </Link>
           ))}
-          {/* <Link
-            href="/dashboard"
-            className={`py-2 px-3 rounded-xl ${
-              pathname === "/dashboard"
-                ? "text-blue-800"
-                : "text-gray-800 hover:text-black"
-            }`}
-          >
-            <span className="text-lg transition-all duration-300">
-              Dashboard
-            </span>
-          </Link> */}
           {LoggedIn ? (
             <Link
               href={"/dashboard"}
@@ -95,8 +81,6 @@ const Navbar = () => {
             </button>
           )}
         </div>
-
-        {/* Mobile Menu Button with Animation */}
 
         <button
           onClick={toggleMenu}
@@ -136,7 +120,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile NavLinks */}
       <motion.div
         initial={{ opacity: 0, height: 0 }}
         animate={{

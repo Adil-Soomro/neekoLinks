@@ -3,20 +3,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
-import { FaShareSquare } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaCopy } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
-import {
-  Settings,
-  BarChart2,
-  Link2,
-  LayoutDashboard,
-  Menu,
-} from "lucide-react";
-// import AnalyticsView from "@/components/dashboard/analytics/AnalyticsView";
-// import StatsCard from "@/components/dashboard/StatsCard";
 
 const Shorten = () => {
   const [url, setURL] = useState("");
@@ -61,14 +51,14 @@ const Shorten = () => {
       setUrlError("URL is required.");
       return;
     } else {
-      setUrlError(""); // Clear the error message when URL is valid
+      setUrlError("");
     }
 
     if (shortUrl === "") {
       setShortUrlError("Short URL is required.");
       return;
     } else {
-      setShortUrlError(""); // Clear the error message when Short URL is valid
+      setShortUrlError("");
     }
     if (!url.includes("https://")) {
       setErrorMessage("Invalid Link! URL must include https://");
@@ -272,7 +262,7 @@ const Shorten = () => {
                     <FaCopy
                       onClick={() =>
                         handleCopy(
-                          `${process.env.NEXT_PUBLIC_HOST}/${item.shortUrl}`
+                          `${process.env.NEXT_PUBLIC_HOST}/${item.shortUrl}`,
                         )
                       }
                       className="text-blue-500 hover:text-blue-700 text-lg cursor-pointer transition-colors duration-200"
@@ -296,7 +286,6 @@ const Shorten = () => {
               className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 transform transition-all scale-95 hover:scale-100"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
               <div className="flex flex-col justify-between items-center mb-1">
                 <h2 className="text-3xl font-semibold text-gray-900">
                   Are you sure?
@@ -332,7 +321,6 @@ const Shorten = () => {
                 </div>
               </div>
 
-              {/* Buttons */}
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"
