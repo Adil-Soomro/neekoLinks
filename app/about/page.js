@@ -45,7 +45,6 @@ const About = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="relative bg-gradient-to-r from-purple-600 to-pink-600 text-white py-20 overflow-hidden"
       >
-        {/* Animated Background Gradient */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-[length:200%_100%] animate-background-shift"
           initial={{ opacity: 0 }}
@@ -54,7 +53,6 @@ const About = () => {
         />
 
         <div className="container mx-auto px-4 text-center relative z-10">
-          {/* Animated Gradient Text for "ABOUT US" */}
           <h1
             className={`${josefin.className} text-4xl md:text-6xl font-bold mb-4`}
           >
@@ -63,7 +61,6 @@ const About = () => {
             </span>
           </h1>
 
-          {/* Animated Gradient Text for Paragraph */}
           <p
             className={`${josefin.className} text-lg font-medium md:text-xl max-w-2xl mx-auto`}
           >

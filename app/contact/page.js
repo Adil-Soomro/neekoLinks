@@ -60,20 +60,19 @@ const Contact = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="max-w-screen-2xl mx-auto py-12 sm:py-16 lg:py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-12 sm:mb-16 bg-gradient-to-r from-blue-600 to-cyan-600 ease-linear animate-background-shift py-20"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
             We'd Love to Hear From You!
           </h1>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg text-gray-300 max-w-2xl mx-auto">
             Whether you have a question, suggestion, or just want to say hello -
             our team is ready to help!
           </p>
@@ -83,9 +82,9 @@ const Contact = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-3 gap-6 mb-12 sm:mb-16"
+          className="grid md:grid-cols-3 gap-6 mb-12 sm:mb-16 px-4"
         >
-          <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div className="bg-white p-6 rounded-2xl shadow-lg shadow-gray-500 hover:scale-105 transition-shadow duration-300">
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
               <Mail className="w-6 h-6 text-blue-600" />
             </div>
