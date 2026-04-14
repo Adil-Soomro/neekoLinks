@@ -1,5 +1,27 @@
 "use client";
+import dynamic from "next/dynamic";
 
+const OverviewPage = dynamic(() => import("@/components/pages/OverviewPage"), {
+  ssr: false,
+});
+
+const AnalyticsPage = dynamic(
+  () => import("@/components/pages/AnalyticsPage"),
+  {
+    ssr: false,
+  },
+);
+
+const ManageLinksPage = dynamic(
+  () => import("@/components/pages/ManageLinksPage"),
+  {
+    ssr: false,
+  },
+);
+
+const SettingsPage = dynamic(() => import("@/components/pages/SettingsPage"), {
+  ssr: false,
+});
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,70 +33,41 @@ import {
   AlertCircle,
   LogOut,
 } from "lucide-react";
-import OverviewPage from "@/components/pages/OverviewPage";
-import AnalyticsPage from "@/components/pages/AnalyticsPage";
-import ManageLinksPage from "@/components/pages/ManageLinksPage";
-import SettingsPage from "@/components/pages/SettingsPage";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Link from "next/link";
 
 const Dashboard = () => {
   const router = useRouter();
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    const expiry = localStorage.getItem("tokenExpiry");
-    if (!token || !expiry || new Date() > Number(expiry)) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("tokenExpiry");
-      toast.error("Session Expired!");
-      redirect("/login");
-    }
-  }, [token]);
   const [activeSection, setActiveSection] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [handleLogout, setHandleLogout] = useState(false);
-
-  const useCounter = (endValue, duration = 2) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      let start = 0;
-      const increment = endValue / (duration * 60);
-
-      const counter = setInterval(() => {
-        start += increment;
-        if (start >= endValue) {
-          clearInterval(counter);
-          start = endValue;
-        }
-        setCount(Math.floor(start));
-      }, 1000 / 80);
-
-      return () => clearInterval(counter);
-    }, [endValue, duration, activeSection]);
-
-    return count;
-  };
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (handleLogout) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("tokenExpiry");
-      toast.success("Logged out successfully!");
-      router.push("/login");
-    }
-  }, [handleLogout]);
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      const expiry = localStorage.getItem("tokenExpiry");
 
-  const totalShortLinks = useCounter(125, 2);
-  const totalClicks = useCounter(1024, 2);
-  const visitors = useCounter(256, 2);
+      if (!token || !expiry || new Date().getTime() > Number(expiry)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenExpiry");
+        toast.error("Session Expired!");
+        router.push("/login");
+      } else {
+        setIsAuthenticated(true);
+      }
+    };
 
-  const handleLogoutFunction = () => {
-    setHandleLogout(!handleLogout);
+    checkAuth();
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiry");
+    toast.success("Logged out successfully!");
+    router.push("/login");
   };
 
   const MENU_ITEMS = [
@@ -126,6 +119,7 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+
   const renderContent = () => {
     if (error) {
       return (
@@ -155,20 +149,24 @@ const Dashboard = () => {
     switch (activeSection) {
       case "overview":
         return <OverviewPage />;
-
       case "analytics":
         return <AnalyticsPage />;
-
       case "manageLinks":
         return <ManageLinksPage />;
-
       case "settings":
         return <SettingsPage />;
-
       default:
         return null;
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex">
@@ -177,41 +175,37 @@ const Dashboard = () => {
         animate={{ width: isSidebarOpen ? 240 : 80 }}
         className="h-screen border-r shadow-sm hidden md:block z-10 sticky top-0 bg-gradient-to-r from-gray-600 to-gray-700 text-white"
       >
-        <div className="flex items-center">
-          <div className="p-4 flex items-center justify-between">
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 hover:bg-gray-100 rounded-lg"
-              aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
-            >
-              <Menu className="relative" />
-            </button>
-          </div>
+        <div className="flex items-center p-4">
+          <button
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="p-2 hover:bg-gray-100 rounded-lg text-white hover:text-gray-900"
+            aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            <Menu className="relative" />
+          </button>
           <motion.h1
             initial={{ opacity: 1 }}
             animate={{ opacity: isSidebarOpen ? 1 : 0 }}
-            className="overflow-hidden font-semibold text-xl"
+            className="overflow-hidden font-semibold text-xl ml-2"
           >
             Dashboard
           </motion.h1>
         </div>
         <nav className="mt-6 px-2 flex flex-col justify-between h-full pb-60">
-          {/* Top menu items */}
           <div className="flex flex-col justify-between h-full">
-            {/* Menu buttons */}
             <div>
-              {MENU_ITEMS.map(({ id, icon: Icon, label, link }) => (
+              {MENU_ITEMS.map(({ id, icon: Icon, label }) => (
                 <div key={id} className="flex items-center px-2">
                   <button
                     onClick={() => setActiveSection(id)}
                     className={`
-            w-full flex items-center gap-3 px-3 py-2 rounded-lg mb-2 transition-colors
-            ${
-              activeSection === id
-                ? "bg-gray-200 text-indigo-600"
-                : "text-gray-300 hover:bg-gray-500"
-            }
-          `}
+                      w-full flex items-center gap-3 px-3 py-2 rounded-lg mb-2 transition-colors
+                      ${
+                        activeSection === id
+                          ? "bg-gray-200 text-indigo-600"
+                          : "text-gray-300 hover:bg-gray-500"
+                      }
+                    `}
                     aria-current={activeSection === id ? "page" : undefined}
                   >
                     <Icon size={20} />
@@ -231,7 +225,7 @@ const Dashboard = () => {
             <div className="px-2 pb-4">
               <button
                 className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-500 transition-colors"
-                onClick={handleLogoutFunction}
+                onClick={handleLogout}
               >
                 <LogOut size={20} />
                 {isSidebarOpen && "Logout"}
@@ -264,13 +258,13 @@ const Dashboard = () => {
               key={id}
               onClick={() => setActiveSection(id)}
               className={`
-                            flex flex-col items-center p-2 rounded-lg transition-colors
-                            ${
-                              activeSection === id
-                                ? "text-indigo-600"
-                                : "text-gray-600 hover:bg-gray-300"
-                            }
-                        `}
+                flex flex-col items-center p-2 rounded-lg transition-colors
+                ${
+                  activeSection === id
+                    ? "text-indigo-600"
+                    : "text-gray-600 hover:bg-gray-300"
+                }
+              `}
               aria-current={activeSection === id ? "page" : undefined}
             >
               <Icon size={20} />
@@ -278,11 +272,11 @@ const Dashboard = () => {
             </button>
           ))}
           <button
-            className=" flex flex-col items-center p-2 rounded-lg text-gray-600 hover:bg-gray-300 transition-colors"
-            onClick={handleLogoutFunction}
+            className="flex flex-col items-center p-2 rounded-lg text-gray-600 hover:bg-gray-300 transition-colors"
+            onClick={handleLogout}
           >
             <LogOut size={20} />
-            {isSidebarOpen && "Logout"}
+            <span className="text-xs mt-1">Logout</span>
           </button>
         </nav>
       </div>
