@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Send } from "lucide-react";
 import { Josefin_Sans, Poppins } from "next/font/google";
+import { ToastError, ToastSuccess } from "@/utils/toastUtils";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,15 +19,16 @@ const josefin = Josefin_Sans({
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState(null);
-  const [statusMessage, setStatusMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("loading");
+
+    if (!email) return;
 
     try {
+      setLoading(true);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_HOST}/api/newsletter`,
         {
@@ -39,23 +41,16 @@ export default function Newsletter() {
       const data = await res.json();
 
       if (!data.success) {
-        setStatus("error");
-        setStatusMessage(data.message);
-      } else {
-        setStatus("success");
-        setStatusMessage("Successfully subscribed!");
-        setEmail("");
+        ToastError(data.message);
+        return;
       }
 
-      setTimeout(() => {
-        setStatus(null);
-      }, 1000);
+      ToastSuccess("Successfully subscribed!");
+      setEmail("");
     } catch (error) {
-      setStatus("error");
-      setStatusMessage("Something went wrong. Please try again.");
-      setTimeout(() => {
-        setStatus(null);
-      }, 1000);
+      ToastError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,13 +82,14 @@ export default function Newsletter() {
               placeholder="Enter your email"
               className={`${poppins.className} font-medium flex-1 px-4 py-3 rounded-lg border border-gray-300 outline-8 focus:outline-indigo-500 transition-shadow`}
               required
+              disabled={loading}
             />
             <button
               type="submit"
-              disabled={status === "loading"}
+              disabled={loading}
               className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg shadow-indigo-500/30 hover:shadow-xl transition-shadow disabled:opacity-70 flex items-center gap-2"
             >
-              {status === "loading" ? (
+              {loading ? (
                 "Subscribing..."
               ) : (
                 <>
@@ -103,20 +99,6 @@ export default function Newsletter() {
             </button>
           </div>
         </form>
-
-        <AnimatePresence>
-          {status && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className={`mt-4 ${status === "success" ? "text-green-600" : "text-red-600"}`}
-            >
-              {statusMessage}
-            </motion.p>
-          )}
-        </AnimatePresence>
       </motion.div>
     </section>
   );

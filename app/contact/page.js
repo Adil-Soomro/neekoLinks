@@ -14,8 +14,6 @@ import { ToastError, ToastSuccess } from "@/utils/toastUtils";
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [status, SetStatus] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,7 +32,6 @@ const Contact = () => {
 
     try {
       setIsLoading(true);
-
       const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/contact`, {
         method: "POST",
         headers: {
@@ -52,7 +49,6 @@ const Contact = () => {
 
       ToastSuccess(resData.message);
       setFormData({ name: "", email: "", message: "" });
-      SetStatus(true);
     } catch (error) {
       console.log(error);
       ToastError("Network error, please try again.");

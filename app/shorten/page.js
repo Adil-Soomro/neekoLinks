@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { FaCopy } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
+import { ToastError, ToastSuccess } from "@/utils/toastUtils";
 
 const Shorten = () => {
   const [url, setURL] = useState("");
@@ -128,8 +129,8 @@ const Shorten = () => {
   };
 
   const handleConfirmDelete = async (id) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/dashboard`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -137,19 +138,18 @@ const Shorten = () => {
       });
 
       const result = await res.json();
-      if (result.success) {
-        setLoading(false);
-        toast.success("Item deleted successfully!");
-        setConfirmDelete(false);
-        getData();
-      } else {
+      if (!result.success) {
         setLoading(false);
         alert(result.message || "Error occurred while deleting.");
       }
+      setConfirmDelete(false);
+      ToastSuccess("Item deleted successfully!");
+      getData();
     } catch (error) {
+      console.error(error);
+      ToastError("An error occurred. Please try again.");
+    } finally {
       setLoading(false);
-      console.error("Error deleting item:", error);
-      alert("A  n error occurred. Please try again.");
     }
   };
   const handleDelete = async (URL) => {
