@@ -3,12 +3,6 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Poppins } from "next/font/google";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700"],
-});
 
 const ManageLinksPage = () => {
   const [urls, setUrls] = useState([]);
@@ -154,7 +148,7 @@ const ManageLinksPage = () => {
               <tr>
                 <td
                   colSpan="6"
-                  className={`${poppins.className} text-center py-4 text-gray-500 font-medium`}
+                  className="font-poppins text-center py-4 text-gray-500 font-medium"
                 >
                   No results found
                 </td>
@@ -204,7 +198,9 @@ const ManageLinksPage = () => {
                       {new Date(doc.lastAccess).toLocaleString()}
                     </td>
                     <td
-                      className={`border px-4 py-2 text-sm font-medium ${doc.isActive ? "text-green-600" : "text-red-600"}`}
+                      className={`border px-4 py-2 text-sm font-medium ${
+                        doc.isActive ? "text-green-600" : "text-red-600"
+                      }`}
                     >
                       {doc.isActive ? "Active" : "Inactive"}
                     </td>
@@ -316,7 +312,11 @@ const ManageLinksPage = () => {
                   </button>
                   <button
                     type="submit"
-                    className={`px-4 py-2 text-white rounded-xl transition-colors w-full sm:w-auto ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-400 shadow-md"}`}
+                    className={`px-4 py-2 text-white rounded-xl transition-colors w-full sm:w-auto ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-400 shadow-md"
+                    }`}
                     disabled={loading}
                   >
                     {loading ? "Saving..." : "Save Changes"}

@@ -4,7 +4,6 @@ import { url } from "@/models/URLSchema";
 export async function POST(request) {
   const body = await request.json();
   const shorturl = body.shorturl;
-  console.log(shorturl);
 
   await connectdb();
 
@@ -22,7 +21,6 @@ export async function POST(request) {
     shortUrl: body.shorturl,
     clicks: 0,
   });
-  console.log(result);
 
   return Response.json({
     success: true,

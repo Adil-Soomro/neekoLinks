@@ -23,11 +23,6 @@ const poppins = localFont({
   variable: "--font-poppins",
 });
 
-const worksans = localFont({
-  src: "./fonts/WorkSans-SemiBold.ttf",
-  variable: "--font-worksans",
-});
-
 export default function Page() {
   const [refHero, inViewHero] = useInView({
     triggerOnce: true,
@@ -177,7 +172,7 @@ export default function Page() {
             >
               <div className="relative z-10">
                 <Image
-                  src="/4673521.png"
+                  src="/illustrations/4673521.png"
                   alt="URL Shortener Illustration"
                   width={600}
                   height={600}

@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import { useInView } from "react-intersection-observer";
@@ -91,6 +92,7 @@ const Faq = () => {
         >
           Frequently Asked Questions
         </motion.h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             {leftColumn.map((item, index) => (
@@ -110,18 +112,19 @@ const Faq = () => {
                     {item.question}
                   </h3>
                   {openStates[index] ? (
-                    <FaChevronDown className="" />
+                    <FaChevronDown />
                   ) : (
-                    <FaChevronRight className="text-primary-600 " />
+                    <FaChevronRight className="text-primary-600" />
                   )}
                 </div>
+
                 <AnimatePresence>
                   {openStates[index] && (
                     <motion.p
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      className={`${josefin.className} mt-2 text-gray-600 light:text-black mb-2`}
+                      className={`${josefin.className} mt-2 text-gray-600 mb-2`}
                     >
                       {item.answer}
                     </motion.p>
@@ -149,18 +152,19 @@ const Faq = () => {
                     {item.question}
                   </h3>
                   {openStates[index + 4] ? (
-                    <FaChevronDown className="text-primary-600" />
+                    <FaChevronDown />
                   ) : (
                     <FaChevronRight className="text-primary-600" />
                   )}
                 </div>
+
                 <AnimatePresence>
                   {openStates[index + 4] && (
                     <motion.p
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      className={`${josefin.className} mt-2 text-gray-600 light:text-black mb-2`}
+                      className={`${josefin.className} mt-2 text-gray-600 mb-2`}
                     >
                       {item.answer}
                     </motion.p>

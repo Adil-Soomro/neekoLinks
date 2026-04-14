@@ -7,7 +7,6 @@ export async function GET() {
     await connectdb();
 
     const items = await url.find();
-    console.log(items);
 
     return Response.json({
       success: true,
@@ -29,7 +28,6 @@ export async function GET() {
 export async function DELETE(req) {
   try {
     const { id } = await req.json();
-    console.log("Received ID:", id);
 
     if (!id) {
       return new Response(
