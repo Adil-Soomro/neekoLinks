@@ -23,7 +23,7 @@ const Shorten = () => {
   const getData = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/generate", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/generate`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -140,7 +140,7 @@ const Shorten = () => {
   const handleConfirmDelete = async (id) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/dashboard", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/dashboard`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),

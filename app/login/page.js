@@ -11,7 +11,7 @@ const Page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },

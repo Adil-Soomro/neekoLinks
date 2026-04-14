@@ -107,11 +107,14 @@ export default function HelpCenter() {
 
     try {
       setLoading(true);
-      const res = await fetch("/api/helpcenter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, message }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/helpcenter`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, message }),
+        },
+      );
 
       const data = await res.json();
       if (!res.ok) {

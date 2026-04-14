@@ -10,7 +10,9 @@ const TopRefferals = () => {
     setLoading(true);
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/dashboard/toprefferals");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_HOST}/api/dashboard/toprefferals`,
+        );
         const data = await response.json();
         setData(data.doc);
         setTimeout(() => {

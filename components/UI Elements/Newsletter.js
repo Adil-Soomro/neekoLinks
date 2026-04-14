@@ -7,14 +7,14 @@ import { Send } from "lucide-react";
 import { Josefin_Sans, Poppins } from "next/font/google";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400','500', '700']
-})
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+});
 
 const josefin = Josefin_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700']
-})
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
@@ -27,11 +27,14 @@ export default function Newsletter() {
     setStatus("loading");
 
     try {
-      const res = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/newsletter`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        },
+      );
 
       const data = await res.json();
 
@@ -57,16 +60,22 @@ export default function Newsletter() {
   };
 
   return (
-    <section ref={ref} className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 bg-opacity-20">
+    <section
+      ref={ref}
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800 bg-opacity-20"
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
         className="container mx-auto max-w-screen-2xl text-center"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-6">Stay updated with our latest features</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+          Stay updated with our latest features
+        </h2>
         <p className={`${josefin.className} text-gray-600 mb-8 text-lg`}>
-          Join our newsletter and be the first to know about new features, tips, and special offers.
+          Join our newsletter and be the first to know about new features, tips,
+          and special offers.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -84,7 +93,13 @@ export default function Newsletter() {
               disabled={status === "loading"}
               className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg font-semibold shadow-lg shadow-indigo-500/30 hover:shadow-xl transition-shadow disabled:opacity-70 flex items-center gap-2"
             >
-              {status === "loading" ? "Subscribing..." : <>Subscribe <Send className="w-4 h-4" /></>}
+              {status === "loading" ? (
+                "Subscribing..."
+              ) : (
+                <>
+                  Subscribe <Send className="w-4 h-4" />
+                </>
+              )}
             </button>
           </div>
         </form>

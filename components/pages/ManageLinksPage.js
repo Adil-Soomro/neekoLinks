@@ -79,11 +79,14 @@ const ManageLinksPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`/api/updatedocument/${docItem._id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_HOST}/api/updatedocument/${docItem._id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
       const data = await response.json();
       setMessage(data.message);
       setTimeout(() => {
